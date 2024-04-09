@@ -1,0 +1,21 @@
+- hosts: localhost
+  become: yes
+  gather_facts: false
+
+  tasks:
+    ## Create VPC Public Route Table ##
+    - name: Create VPC Public Route Table
+      ec2_vpc_route_table:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        vpc_id: "{{ vpc_result.vpc.id }}"
+        region: "{{ region }}"
+        state: present
+        tags:
+          Name: "{{ pubroute_table_name }}"
+        subnets: 
+          - "{{ pubsubnet_result.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ igw_result.gateway_id }}"
+      register: public_route_table
