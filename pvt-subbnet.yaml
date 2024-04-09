@@ -1,0 +1,19 @@
+- hosts: localhost
+  become: yes
+  gather_facts: false
+
+  tasks:
+    ## Create VPC Private Subnet ##
+    - name: Create VPC Private Subnet
+      ec2_vpc_subnet:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        vpc_id: "{{ vpc_result.vpc.id }}"
+        region: "{{ region }}"
+        az: "{{ pvtzone }}"
+        state: present
+        cidr: "{{ pvtsubnet_cidr_block }}"
+        map_public: no
+        resource_tags:
+          Name: "{{ pvtsubnet_name }}"
+      register: pvtsubnet_result
