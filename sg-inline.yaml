@@ -1,0 +1,22 @@
+- hosts: localhost
+  become: yes
+  gather_facts: false
+
+  tasks:
+    ## Create VPC Security Group ##
+    - name: Create VPC Security Group
+      ec2_group:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        vpc_id: "{{ vpc_result.vpc.id }}"
+        region: "{{ region }}"
+        state: present
+        name: "{{ security_group_name }}"
+        description: allow
+        tags:
+          Name: md-sg
+        rules:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+            rule_desc: allow all traffic
+      register: security_group_results
