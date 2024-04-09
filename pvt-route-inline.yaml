@@ -1,0 +1,18 @@
+- hosts: localhost
+  become: yes
+  gather_facts: false
+
+  tasks:
+    ## Create VPC Private Route Table ##
+    - name: Create VPC Private Route Table
+      ec2_vpc_route_table:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        vpc_id: "{{ vpc_result.vpc.id }}"
+        region: "{{ region }}"
+        state: present
+        tags:
+          Name: "{{ pvtroute_table_name }}"
+        subnets: 
+          - "{{ pvtsubnet_result.subnet.id }}"
+      register: private_route_table
