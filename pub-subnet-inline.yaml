@@ -1,0 +1,19 @@
+- hosts: localhost
+  become: yes
+  gather_facts: false
+
+  tasks:
+    ## Create VPC Public Subnet ##
+    - name: Create VPC Public Subnet
+      ec2_vpc_subnet:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        vpc_id: "{{ vpc_result.vpc.id }}"
+        region: "{{ region }}"
+        az: "{{ pubzone }}"
+        state: present
+        cidr: "{{ pubsubnet_cidr_block }}"
+        map_public: yes
+        resource_tags:
+          Name: "{{ pubsubnet_name }}"
+      register: pubsubnet_result
