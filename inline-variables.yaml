@@ -22,7 +22,7 @@
     region: "us-east-1"
     pubzone: "us-east-1a"
     pvtzone: "us-east-1b"
-    image_id: "ami-033a1ebf088e56e81"
+    image_id: "ami-0a699202e5027c10d"
     type: "t2.micro"
     instance_name: "ram-ec"
 
