@@ -14,7 +14,7 @@
         name: "{{ security_group_name }}"
         description: allow
         tags:
-          Name: md-sg
+          Name: ram-sg
         rules:
           - proto: all
             cidr_ip: 0.0.0.0/0
